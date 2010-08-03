@@ -38,6 +38,9 @@
 #define CATEGORY_UNSTAGE_HUNK "CategoryUnstageHunk"
 #define CATEGORY_STAGE_HUNK "CategoryStageHunk"
 
+#define gtk_widget_get_window(x) x->window
+#define gtk_widget_get_screen(x) x->screen
+
 /* Properties */
 enum
 {
@@ -1406,7 +1409,8 @@ gitg_commit_view_parser_finished(GtkBuildable *buildable, GtkBuilder *builder)
 
 	if (pixbuf)
 	{
-		gtk_source_view_set_mark_category_icon_from_pixbuf(self->priv->changes_view, CATEGORY_STAGE_HUNK, pixbuf);
+	  //gtk_source_view_set_mark_category_icon_from_pixbuf(self->priv->changes_view, CATEGORY_STAGE_HUNK, pixbuf);
+		gtk_source_view_set_mark_category_pixbuf(self->priv->changes_view, CATEGORY_STAGE_HUNK, pixbuf);
 		g_object_unref(pixbuf);
 	}
 
@@ -1414,7 +1418,8 @@ gitg_commit_view_parser_finished(GtkBuildable *buildable, GtkBuilder *builder)
 
 	if (pixbuf)
 	{
-		gtk_source_view_set_mark_category_icon_from_pixbuf(self->priv->changes_view, CATEGORY_UNSTAGE_HUNK, pixbuf);
+	  //gtk_source_view_set_mark_category_icon_from_pixbuf(self->priv->changes_view, CATEGORY_UNSTAGE_HUNK, pixbuf);
+		gtk_source_view_set_mark_category_pixbuf(self->priv->changes_view, CATEGORY_UNSTAGE_HUNK, pixbuf);
 		g_object_unref(pixbuf);
 	}
 
@@ -2237,6 +2242,7 @@ on_edit_file (GtkAction *action, GitgCommitView *view)
 		}
 
 		GFile *location = gitg_changed_file_get_file (file);
+#if 0
 		gchar *uri = g_file_get_uri (location);
 
 		gtk_show_uri (gtk_widget_get_screen (GTK_WIDGET (view)),
@@ -2245,6 +2251,7 @@ on_edit_file (GtkAction *action, GitgCommitView *view)
 		              NULL);
 
 		g_free (uri);
+#endif
 		g_object_unref (location);
 		g_object_unref (file);
 	}

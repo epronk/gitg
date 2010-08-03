@@ -48,5 +48,5 @@ _gitg_gettext (const gchar *msgid)
 		initialized = TRUE;
 	}
 
-	return g_dgettext (GETTEXT_PACKAGE, msgid);
+	return 0; //g_dgettext (GETTEXT_PACKAGE, msgid);
 }

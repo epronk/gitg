@@ -45,32 +45,43 @@
 #define GITG_DIFF_ITER_SET_REGION(iter, region) ((iter)->userdata2 = region)
 #define GITG_DIFF_ITER_SET_VIEW(iter, view) ((iter)->userdata = view)
 
+#if 0
 static void on_buffer_insert_text (GtkTextBuffer *buffer,
                                    GtkTextIter *iter,
                                    gchar const *text,
                                    gint len,
                                    GitgDiffView *view);
+#endif
 
+#if 0
 static void on_buffer_delete_range (GtkTextBuffer *buffer,
                                     GtkTextIter *start,
                                     GtkTextIter *end,
                                     GitgDiffView *view);
+#endif
 
+#if 0
 static void
 line_renderer_size_func (GtkSourceGutter *gutter,
                          GtkCellRenderer *cell,
                          GitgDiffView    *view);
+#endif
+
+#if 0
 static void
 line_renderer_data_func (GtkSourceGutter *gutter,
                          GtkCellRenderer *cell,
                          gint             line_number,
                          gboolean         current_line,
                          GitgDiffView    *view);
+#endif
 
 static void disable_diff_view (GitgDiffView *view);
 static void enable_diff_view (GitgDiffView *view);
 
+#if 0
 static gboolean on_idle_scan (GitgDiffView *view);
+#endif
 
 /* Signals */
 enum
@@ -361,6 +372,7 @@ disable_diff_view (GitgDiffView *view)
 
 	if (view->priv->current_buffer)
 	{
+#if 0
 		GtkTextTagTable *table;
 		GtkSourceGutter *gutter;
 
@@ -388,6 +400,7 @@ disable_diff_view (GitgDiffView *view)
 
 		gtk_source_gutter_remove (gutter,
 		                          GTK_CELL_RENDERER (view->priv->line_renderer));
+#endif
 	}
 
 	view->priv->diff_enabled = FALSE;
@@ -396,6 +409,7 @@ disable_diff_view (GitgDiffView *view)
 static void
 enable_diff_view (GitgDiffView *view)
 {
+#if 0
 	GtkTextBuffer *buffer;
 	GtkTextTagTable *table;
 	GtkSourceGutter *gutter;
@@ -457,6 +471,7 @@ enable_diff_view (GitgDiffView *view)
 	                                      NULL);
 
 	view->priv->diff_enabled = TRUE;
+#endif
 }
 
 static void
@@ -500,15 +515,16 @@ index_compare (gconstpointer a, gconstpointer b, gpointer userdata)
 static void
 ensure_max_line (GitgDiffView *view, Hunk *hunk)
 {
+#if 0
 	guint num = hunk->region.next ? hunk->region.next->line - hunk->region.line : 0;
 	guint m = MAX (hunk->new + num, hunk->old + num);
-
 	if (m > view->priv->max_line_count)
 	{
 		view->priv->max_line_count = m;
 
 		gtk_source_gutter_queue_draw (gtk_source_view_get_gutter (GTK_SOURCE_VIEW (view), GTK_TEXT_WINDOW_LEFT));
 	}
+#endif
 }
 
 static void
@@ -714,6 +730,7 @@ find_current_region (GitgDiffView *view, guint line)
 	return ret->visible ? ret : NULL;
 }
 
+#if 0
 static gboolean
 line_has_prefix (GitgDiffView *view, guint line, gchar const *prefix)
 {
@@ -734,7 +751,9 @@ line_has_prefix (GitgDiffView *view, guint line, gchar const *prefix)
 
 	return ret;
 }
+#endif
 
+#if 0
 static gboolean
 draw_old (GitgDiffView *view, guint line)
 {
@@ -746,7 +765,9 @@ draw_new (GitgDiffView *view, guint line)
 {
 	return !line_has_prefix (view, line, "-");
 }
+#endif
 
+#if 0
 static void
 get_initial_counters (GitgDiffView *view, Region *region, guint line, guint counters[2])
 {
@@ -763,7 +784,9 @@ get_initial_counters (GitgDiffView *view, Region *region, guint line, guint coun
 			++counters[1];
 	}
 }
+#endif
 
+#if 0
 static void
 line_renderer_size_func (GtkSourceGutter *gutter,
                          GtkCellRenderer *cell,
@@ -784,7 +807,9 @@ line_renderer_size_func (GtkSourceGutter *gutter,
 		g_free (label);
 	}
 }
+#endif
 
+#if 0
 static void
 line_renderer_data_func (GtkSourceGutter *gutter,
                          GtkCellRenderer *cell,
@@ -848,6 +873,7 @@ line_renderer_data_func (GtkSourceGutter *gutter,
 		g_free (label);
 	}
 }
+#endif
 
 static gint
 gitg_diff_view_expose (GtkWidget      *widget,
@@ -1287,6 +1313,7 @@ gitg_diff_iter_get_index (GitgDiffIter  *iter,
 	return TRUE;
 }
 
+#if 0
 static gboolean
 iter_in_view (GitgDiffView *view,
               GtkTextIter  *iter)
@@ -1302,7 +1329,9 @@ iter_in_view (GitgDiffView *view,
 
 	return gtk_text_iter_in_range (iter, &start, &end) || gtk_text_iter_equal (iter, &end);
 }
+#endif
 
+#if 0
 static gboolean
 try_scan (GitgDiffView *view)
 {
@@ -1335,7 +1364,9 @@ try_scan (GitgDiffView *view)
 
 	return last != view->priv->last_scan_line;
 }
+#endif
 
+#if 0
 static void
 on_buffer_delete_range (GtkTextBuffer *buffer,
                         GtkTextIter   *start,
@@ -1360,7 +1391,9 @@ on_buffer_delete_range (GtkTextBuffer *buffer,
 		                                  view);
 	}
 }
+#endif
 
+#if 0
 static void
 on_buffer_insert_text (GtkTextBuffer *buffer,
                        GtkTextIter   *iter,
@@ -1384,7 +1417,9 @@ on_buffer_insert_text (GtkTextBuffer *buffer,
 		view->priv->scan_id = g_idle_add ( (GSourceFunc)on_idle_scan, view);
 	}
 }
+#endif
 
+#if 0
 static gboolean
 on_idle_scan (GitgDiffView *view)
 {
@@ -1396,6 +1431,7 @@ on_idle_scan (GitgDiffView *view)
 	view->priv->scan_id = 0;
 	return FALSE;
 }
+#endif
 
 gboolean
 gitg_diff_view_get_header_at_iter (GitgDiffView *view,

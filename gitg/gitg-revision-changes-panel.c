@@ -16,6 +16,7 @@
 #include "gitg-activatable.h"
 
 #define GITG_REVISION_CHANGES_PANEL_GET_PRIVATE(object)(G_TYPE_INSTANCE_GET_PRIVATE((object), GITG_TYPE_REVISION_CHANGES_PANEL, GitgRevisionChangesPanelPrivate))
+#define gtk_widget_get_window(x) x->window
 
 struct _GitgRevisionChangesPanelPrivate
 {

@@ -67,7 +67,8 @@ update_colors (GitgStatView *view)
 	GtkStyle *style;
 	GdkColor bg_color;
 	gdouble r, g, b;
-	gdouble hue, sat, val;
+	//gdouble hue;
+	//gdouble sat, val;
 
 	if (!gtk_widget_get_realized (GTK_WIDGET (view)))
 	{
@@ -75,17 +76,18 @@ update_colors (GitgStatView *view)
 	}
 
 	style = gtk_widget_get_style (GTK_WIDGET (view));
-	bg_color = style->base[gtk_widget_get_state (GTK_WIDGET (view))];
+	//bg_color = style->base[gtk_widget_get_state (GTK_WIDGET (view))];
+	bg_color = style->base[GTK_WIDGET_STATE (GTK_WIDGET (view))];
 
 	r = bg_color.red / 65535.0;
 	g = bg_color.green / 65535.0;
 	b = bg_color.blue / 65535.0;
 
-	gtk_rgb_to_hsv (r, g, b, &hue, &sat, &val);
+	//gtk_rgb_to_hsv (r, g, b, &hue, &sat, &val);
 
-	sat = MIN(sat * 0.5 + 0.5, 1);
-	val = MIN((pow(val + 1, 3) - 1) / 7 * 0.6 + 0.2, 1);
-
+	//sat = MIN(sat * 0.5 + 0.5, 1);
+	//val = MIN((pow(val + 1, 3) - 1) / 7 * 0.6 + 0.2, 1);
+#if 0
 	gtk_hsv_to_rgb (0,
 	                sat,
 	                val,
@@ -99,6 +101,7 @@ update_colors (GitgStatView *view)
 	                &(view->priv->color_added[0]),
 	                &(view->priv->color_added[1]),
 	                &(view->priv->color_added[2]));
+#endif
 
 	clear_gradients (view);
 }
@@ -117,6 +120,7 @@ gitg_stat_view_realize (GtkWidget *widget)
 static void
 update_styles (GitgStatView *view)
 {
+#if 0
 	gtk_style_get (gtk_widget_get_style (GTK_WIDGET (view)),
 	               GITG_TYPE_STAT_VIEW,
 	               "radius", &view->priv->radius,
@@ -124,6 +128,7 @@ update_styles (GitgStatView *view)
 	               "show-lines", &view->priv->show_lines,
 	               "lines-spacing", &view->priv->lines_spacing,
 	               NULL);
+#endif
 }
 
 static void
@@ -292,8 +297,8 @@ gitg_stat_view_expose (GtkWidget *widget, GdkEventExpose *event)
 	gdk_cairo_rectangle (ctx, &event->area);
 	cairo_clip (ctx);
 
-	gtk_widget_get_allocation (widget, &alloc);
-
+	//gtk_widget_get_allocation (widget, &alloc);
+	alloc = widget->allocation;
 	update_gradients (view, &alloc);
 
 	unit = (alloc.width - padding) / (gdouble)view->priv->max_lines;

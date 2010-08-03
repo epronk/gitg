@@ -30,7 +30,7 @@
 #include <stdlib.h>
 
 #define GITG_REVISION_DETAILS_PANEL_GET_PRIVATE(object)(G_TYPE_INSTANCE_GET_PRIVATE((object), GITG_TYPE_REVISION_DETAILS_PANEL, GitgRevisionDetailsPanelPrivate))
-
+#define gtk_widget_get_window(x) x->window
 typedef struct
 {
 	gchar *file;

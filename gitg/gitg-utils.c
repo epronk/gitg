@@ -30,6 +30,8 @@
 
 #include "gseal-gtk-compat.h"
 
+#define gtk_widget_get_window(x) x->window
+
 gchar *
 gitg_utils_get_content_type(GFile *file)
 {
@@ -131,8 +133,9 @@ gitg_utils_get_language(gchar const *filename, gchar const *content_type)
 	if (!gitg_utils_can_display_content_type(content_type))
 		return NULL;
 
-	GtkSourceLanguageManager *manager = gtk_source_language_manager_get_default();
-	return gtk_source_language_manager_guess_language(manager, filename, content_type);
+	//GtkSourceLanguageManager *manager = gtk_source_language_manager_get_default();
+	//return gtk_source_language_manager_guess_language(manager, filename, content_type);
+	return 0;
 }
 
 gchar *
@@ -221,7 +224,8 @@ gitg_utils_menu_position_under_widget (GtkMenu  *menu,
 	gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
 
 	GtkAllocation alloc;
-	gtk_widget_get_allocation (w, &alloc);
+	//gtk_widget_get_allocation (w, &alloc);
+	alloc = w->allocation;
 
 	if (gtk_widget_get_direction (w) == GTK_TEXT_DIR_RTL)
 	{
@@ -409,10 +413,10 @@ paned_set_position (GtkPaned *paned, gint position, gboolean reversed)
 	}
 	else
 	{
-		GtkAllocation alloc;
-		gtk_widget_get_allocation (GTK_WIDGET (paned), &alloc);
+	  //GtkAllocation alloc;
+		//gtk_widget_get_allocation (GTK_WIDGET (paned), &alloc);
 
-		gtk_paned_set_position (paned, alloc.width - position);
+		//gtk_paned_set_position (paned, alloc.width - position);
 	}
 }
 

@@ -158,7 +158,8 @@ render_label (GitgDiffLineRenderer *lr,
 	pango_layout_set_alignment (layout, PANGO_ALIGN_CENTER);
 
 	style = gtk_widget_get_style (widget);
-	state = gtk_widget_get_state (widget);
+	//state = gtk_widget_get_state (widget);
+	state = GTK_WIDGET_STATE(widget);
 
 	cairo_t *ctx = gdk_cairo_create (window);
 
@@ -249,7 +250,8 @@ render_lines (GitgDiffLineRenderer *lr,
 
 	gtk_paint_layout (style,
 	                  window,
-	                  gtk_widget_get_state (widget),
+					  //gtk_widget_get_state (widget),
+	                  GTK_WIDGET_STATE (widget),
 	                  FALSE,
 	                  NULL,
 	                  widget,
@@ -261,7 +263,8 @@ render_lines (GitgDiffLineRenderer *lr,
 	pango_layout_set_text (layout, new_str, -1);
 	gtk_paint_layout (style,
 	                  window,
-	                  gtk_widget_get_state (widget),
+	                  //gtk_widget_get_state (widget),
+					  GTK_WIDGET_STATE (widget),
 	                  FALSE,
 	                  NULL,
 	                  widget,
@@ -274,7 +277,8 @@ render_lines (GitgDiffLineRenderer *lr,
 
 	gtk_paint_vline (style,
 	                 window,
-	                 gtk_widget_get_state (widget),
+	                 //gtk_widget_get_state (widget),
+	                 GTK_WIDGET_STATE (widget),
 	                 NULL,
 	                 widget,
 	                 NULL,

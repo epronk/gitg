@@ -24,6 +24,11 @@
 #include <libgitg/gitg-hash.h>
 #include <unistd.h>
 
+/* compatibility for older than glib-2.19.10 */
+#ifndef G_FILE_CREATE_REPLACE_DESTINATION
+#define G_FILE_CREATE_REPLACE_DESTINATION 0
+#endif
+
 #include "gitg-branch-actions.h"
 
 typedef enum
@@ -168,7 +173,8 @@ run_progress (GitgWindow       *window,
 	gtk_window_set_title (GTK_WINDOW (dlg), _ ("gitg"));
 
 	// Add progress bar
-	GtkWidget *area = gtk_dialog_get_content_area (GTK_DIALOG (dlg));
+	//GtkWidget *area = gtk_dialog_get_content_area (GTK_DIALOG (dlg));
+	GtkWidget *area = GTK_DIALOG(dlg)->action_area;
 	GtkWidget *progress = gtk_progress_bar_new ();
 	gtk_widget_show (progress);
 
@@ -612,7 +618,8 @@ rename_dialog (GitgWindow *window, const gchar *oldname)
 	gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (box), entry, TRUE, TRUE, 0);
 	gtk_widget_show_all (box);
-	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dlg))), box, TRUE, TRUE, 12);
+	//gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dlg))), box, TRUE, TRUE, 12);
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dlg)->action_area), box, TRUE, TRUE, 12);
 	gint ret = gtk_dialog_run (GTK_DIALOG (dlg));
 
 	gchar *newname = NULL;

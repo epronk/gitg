@@ -57,6 +57,7 @@
 #define DYNAMIC_ACTION_DATA_BRANCH_KEY "GitgDynamicActionDataBranchKey"
 
 #define GITG_WINDOW_GET_PRIVATE(object)(G_TYPE_INSTANCE_GET_PRIVATE((object), GITG_TYPE_WINDOW, GitgWindowPrivate))
+#define gtk_widget_get_window(x) x->window
 
 enum
 {
@@ -333,6 +334,7 @@ on_selection_changed (GtkTreeSelection *selection,
 	}
 }
 
+#if 0
 static void
 on_search_icon_release (GtkEntry             *entry,
                         GtkEntryIconPosition  icon_pos,
@@ -347,6 +349,7 @@ on_search_icon_release (GtkEntry             *entry,
 	                button,
 	                gtk_get_current_event_time ());
 }
+#endif
 
 static void
 search_column_activate (GtkAction   *action,
@@ -456,9 +459,9 @@ build_search_entry (GitgWindow *window,
 	box = GTK_WIDGET (gtk_builder_get_object (builder, "hbox_top"));
 	entry = gtk_entry_new ();
 
-	gtk_entry_set_icon_from_stock (GTK_ENTRY (entry),
-	                               GTK_ENTRY_ICON_PRIMARY,
-	                               GTK_STOCK_FIND);
+	//gtk_entry_set_icon_from_stock (GTK_ENTRY (entry),
+	//                               GTK_ENTRY_ICON_PRIMARY,
+	//                               GTK_STOCK_FIND);
 
 	gtk_tree_view_set_search_entry (window->priv->tree_view, GTK_ENTRY(entry));
 	gtk_widget_show (entry);
@@ -470,10 +473,12 @@ build_search_entry (GitgWindow *window,
 	window->priv->search_popup = popup;
 	g_object_ref (popup);
 
+#if 0
 	g_signal_connect (entry,
 	                  "icon-release",
 	                  G_CALLBACK(on_search_icon_release),
 	                  window);
+#endif
 
 	gtk_tree_view_set_search_column (window->priv->tree_view, 1);
 
@@ -1010,7 +1015,8 @@ save_state (GitgWindow *window)
 	GtkAllocation allocation;
 	gint position;
 
-	gtk_widget_get_allocation (GTK_WIDGET(window), &allocation);
+	//gtk_widget_get_allocation (GTK_WIDGET(window), &allocation);
+	allocation = GTK_WIDGET(window)->allocation;
 
 	gitg_settings_set_window_width (settings, allocation.width);
 	gitg_settings_set_window_height (settings, allocation.height);
@@ -1040,8 +1046,9 @@ save_state (GitgWindow *window)
 	{
 		GtkAllocation alloc;
 
-		gtk_widget_get_allocation (GTK_WIDGET (window->priv->hpaned_commit2),
-		                           &alloc);
+		//gtk_widget_get_allocation (GTK_WIDGET (window->priv->hpaned_commit2),
+		//                           &alloc);
+		alloc = GTK_WIDGET (window->priv->hpaned_commit2)->allocation;
 
 		position = gtk_paned_get_position (GTK_PANED (window->priv->hpaned_commit2));
 
@@ -2104,11 +2111,11 @@ on_open_dialog_response (GtkFileChooser *dialog,
 		return;
 	}
 
-	GFile *file = gtk_file_chooser_get_file (dialog);
+	//GFile *file = gtk_file_chooser_get_file (dialog);
 	gtk_widget_destroy (GTK_WIDGET(dialog));
 
-	load_repository (window, NULL, file, 0, NULL, NULL);
-	g_object_unref (file);
+	//load_repository (window, NULL, file, 0, NULL, NULL);
+	//g_object_unref (file);
 }
 
 void
@@ -2193,7 +2200,7 @@ url_activate_hook (GtkAboutDialog *dialog,
                    gchar const    *link,
                    gpointer        data)
 {
-	gtk_show_uri (NULL, link, GDK_CURRENT_TIME, NULL);
+  //gtk_show_uri (NULL, link, GDK_CURRENT_TIME, NULL);
 }
 
 static void
@@ -2207,7 +2214,7 @@ email_activate_hook (GtkAboutDialog *dialog,
 	escaped = g_uri_escape_string (link, NULL, FALSE);
 	uri = g_strdup_printf ("mailto:%s", escaped);
 
-	gtk_show_uri (NULL, uri, GDK_CURRENT_TIME, NULL);
+	//gtk_show_uri (NULL, uri, GDK_CURRENT_TIME, NULL);
 
 	g_free (uri);
 	g_free (escaped);
@@ -3360,9 +3367,9 @@ on_revision_format_patch_activate (GtkAction  *action,
 
 	GFile *work_tree = gitg_repository_get_work_tree (window->priv->repository);
 
-	gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog),
-	                                          work_tree,
-	                                          NULL);
+	//gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog),
+	//                                          work_tree,
+	//                                          NULL);
 
 	g_object_unref (work_tree);
 

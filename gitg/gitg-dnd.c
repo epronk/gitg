@@ -31,6 +31,17 @@
 
 #include <string.h>
 
+#define gtk_widget_get_window(x) x->window
+#define gtk_selection_data_get_target(d)  ((d)->target)
+#define gtk_selection_data_get_data_type(d)  ((d)->data_type)
+#define gtk_selection_data_get_format(d)  ((d)->format)
+#define gtk_adjustment_get_page_size(adj) adj->page_size
+#define gtk_adjustment_get_upper(adj) adj->upper
+#define gtk_adjustment_get_lower(adj) adj->lower
+#define gtk_adjustment_get_value(adj) adj->value
+#define gtk_adjustment_get_page_size(adj) adj->page_size
+#define gtk_adjustment_get_page_size(adj) adj->page_size
+
 enum
 {
 	DRAG_TARGET_REF = 1,
